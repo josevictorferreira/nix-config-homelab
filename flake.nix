@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
+    proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
   };
 
   outputs = { self, nixpkgs, flake-utils, ... }:
@@ -19,8 +20,10 @@
           system = "aarch64-linux";
           modules = [
             ./modules/hardware/raspberry-pi4.nix
+            proxmox-nixos.nixosModules.proxmox-ve
             ./modules/hardware/shared-storage.nix
             ./hosts/raspberry-pi4.nix
+            ./modules/services/proxmox.nix
           ];
         };
       };
