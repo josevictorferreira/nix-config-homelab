@@ -4,7 +4,7 @@
   imports = [
     ./../modules/programs/vim.nix
     ./../modules/programs/git.nix
-    ./../modules/services/minio.nix
+    ./../modules/services/nfs.nix
   ];
 
   boot.loader.grub.enable = false;
