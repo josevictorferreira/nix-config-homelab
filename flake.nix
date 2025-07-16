@@ -7,7 +7,7 @@
     proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
+  outputs = { self, nixpkgs, flake-utils, proxmox-nixos, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
@@ -20,10 +20,19 @@
           system = "aarch64-linux";
           modules = [
             ./modules/hardware/raspberry-pi4.nix
-            proxmox-nixos.nixosModules.proxmox-ve
             ./modules/hardware/shared-storage.nix
             ./hosts/raspberry-pi4.nix
-            ./modules/services/proxmox.nix
+            proxmox-nixos.nixosModules.proxmox-ve
+            ({ pkgs, lib, ... }: {
+              services.proxmox-ve = {
+                enable = true;
+                ipAddress = "10.10.10.209";
+              };
+
+              nixpkgs.overlays = [
+                proxmox-nixos.overlays."aarch64-linux"
+              ];
+            })
           ];
         };
       };
