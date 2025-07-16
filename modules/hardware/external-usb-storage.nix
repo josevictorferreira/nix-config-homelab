@@ -18,4 +18,36 @@
        "ssd"
     ];
   };
+
+  systemd.services."mount-backup-drive" = {
+    description = "Mount USB Backup Drive";
+    serviceConfig.Type = "oneshot";
+    script = ''
+      mount /mnt/backup-storage
+    '';
+  };
+
+  systemd.services."unmount-backup-drive" = {
+    description = "Unmount USB Backup Drive";
+    serviceConfig.Type = "oneshot";
+    script = ''
+      umount /mnt/backup-storage
+    '';
+  };
+
+  systemd.timers."mount-backup-drive" = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "daily 01:00";
+      Persistent = true;
+    };
+  };
+
+  systemd.timers."unmount-backup-drive" = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "daily 07:00";
+      Persistent = true;
+    };
+  };
 }
