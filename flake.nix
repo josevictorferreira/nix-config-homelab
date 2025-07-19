@@ -20,6 +20,7 @@
           modules = [
             ./modules/hardware/raspberry-pi4.nix
             ./modules/hardware/shared-storage.nix
+            ./modules/hardware/external-usb-storage.nix
             ./hosts/raspberry-pi4.nix
           ];
         };

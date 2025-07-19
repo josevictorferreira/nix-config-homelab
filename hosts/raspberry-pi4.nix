@@ -5,6 +5,7 @@
     ./../modules/programs/vim.nix
     ./../modules/programs/git.nix
     ./../modules/services/nfs.nix
+    ./../modules/services/homelab-wol.nix
   ];
 
   boot.loader.grub.enable = false;
