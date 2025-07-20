@@ -8,12 +8,13 @@ let
     ];
 
     mkPveService = node: {
-        "systemd.services.pve-wol-${node.name}" = {
+        "pve-wol-${node.name}" = {
             description = "Check if ${node.name} is online and send WoL if down";
+            wantedBy = [ "default.target" ];
             serviceConfig = {
                 Type = "oneshot";
                 ExecStart = pkgs.writeShellScript "pve-wol-${node.name}" ''
-                    if ! ping -c 1 -W 1 ${node.ip} > /dev/null; then
+                    if ! ${pkgs.iputils}/bin/ping -c 2 -w 3 ${node.ip} > /dev/null; then
                         echo "${node.name} is offline. Sending WoL..."
                         ${pkgs.wakeonlan}/bin/wakeonlan ${node.mac}
                     else
@@ -23,7 +24,10 @@ let
             };
         };
 
-        "systemd.timers.pve-wol-${node.name}" = {
+    };
+
+    mkPveTimer = node: {
+        "pve-wol-${node.name}" = {
             wantedBy = [ "timers.target" ];
             timerConfig = {
                 OnUnitActiveSec = "5min";
@@ -33,11 +37,14 @@ let
     };
 
     allServices = lib.foldl (acc: node: acc // mkPveService node) {} pveNodes;
-
+    allTimers = lib.foldl (acc: node: acc // mkPveTimer node) {} pveNodes;
 in
 {
-    environment.systemPackages = [ pkgs.wakeonlan ];
-    
-    systemd.services = allServices.systemd.services or {};
-    systemd.timers = allServices.systemd.timers or {};
+    environment.systemPackages = [
+        pkgs.iputils
+        pkgs.wakeonlan
+    ];
+
+    systemd.services = allServices;
+    systemd.timers = allTimers;
 }
