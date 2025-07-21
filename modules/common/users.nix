@@ -8,6 +8,11 @@
     openssh.authorizedKeys.keys = import ../keys/josevictor.nix;
   };
 
+  security.sudo = {
+    enable = true;
+    wheelNeedsPassword = false;
+  };
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
