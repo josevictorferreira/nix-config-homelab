@@ -13,7 +13,7 @@
   networking.staticIP = {
     enable = true;
     interface = "ens18";
-    address = "10.10.10.209";
+    address = "10.10.10.210";
   };
   services.qemuGuest.enable = true;
 }
