@@ -1,28 +1,28 @@
 {
-  description = "My Raspberry Pi 4 NixOS configurations";
+  description = "My Homelab Machines NixOS configurations";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
   };
+  outputs = { nixpkgs, ... }@inputs:
+    let
+      hosts = {
+        rpi4 = "aarch64-linux";
+        k8s-node-alpha-210 = "x86_64-linux";
+      };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-      in {
-        devShell = pkgs.mkShell {
-          buildInputs = [ pkgs.git pkgs.nixos-rebuild ];
-        };
-      }) // {
-        nixosConfigurations.raspberry-pi4 = nixpkgs.lib.nixosSystem {
-          system = "aarch64-linux";
+      mkHost = hostName:
+        nixpkgs.lib.nixosSystem {
+          system = hosts.${hostName};
+          specialArgs = { inherit inputs hostName; };
           modules = [
-            ./modules/hardware/raspberry-pi4.nix
-            ./modules/hardware/shared-storage.nix
-            ./modules/hardware/external-usb-storage.nix
-            ./hosts/raspberry-pi4.nix
+            ./hosts/${hostName}/configuration.nix
           ];
         };
-      };
+    in
+    {
+      nixosConfigurations = nixpkgs.lib.mapAttrs (_: mkHost) hosts;
+    };
 }
+
