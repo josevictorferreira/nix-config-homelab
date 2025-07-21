@@ -22,7 +22,7 @@
         };
     in
     {
-      nixosConfigurations = nixpkgs.lib.mapAttrs (_: mkHost) hosts;
+      nixosConfigurations = nixpkgs.lib.mapAttrs (hostName: _system: mkHost hostName) hosts;
     };
 }
 
