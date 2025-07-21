@@ -3,7 +3,7 @@
 .DEFAULT_GOAL := help
 
 rebuild: ## Rebuild NixOS configuration.
-	sudo nixos-rebuild switch --flake .#raspberry-pi4 --impure
+	sudo nixos-rebuild switch --flake .
 
 clean: ## Clean up the Nix store.
 	nix-collect-garbage -d
