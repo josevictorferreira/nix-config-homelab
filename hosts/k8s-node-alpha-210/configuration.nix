@@ -16,4 +16,5 @@
     address = "10.10.10.210";
   };
   services.qemuGuest.enable = true;
+  services.cloud-init.enable = true;
 }
