@@ -3,6 +3,7 @@
 {
   imports = [
     ./../modules/common/nix.nix
+    ./../modules/common/sops.nix
     ./../modules/common/static-ip.nix
     ./../modules/common/locale.nix
     ./../modules/common/ssh.nix
