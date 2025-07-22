@@ -6,15 +6,10 @@
     ./base.nix
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.hostName = "k8s-node-211-epsilon";
+  networking.hostName = "k8s-node-214-epsilon";
   networking.staticIP = {
     enable = true;
     interface = "ens18";
     address = "10.10.10.214";
   };
-  services.qemuGuest.enable = true;
-  services.cloud-init.enable = true;
 }

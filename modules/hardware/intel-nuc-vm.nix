@@ -29,4 +29,9 @@
   networking.useDHCP = lib.mkDefault false;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
+  services.qemuGuest.enable = true;
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 }

@@ -8,9 +8,6 @@
     ./../modules/services/wake-on-lan-observer.nix
   ];
 
-  boot.loader.grub.enable = false;
-  boot.loader.generic-extlinux-compatible.enable = true;
-
   networking.hostName = "rpi4";
   networking.staticIP = {
     enable = true;
