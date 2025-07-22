@@ -7,17 +7,17 @@
     syntaxHighlighting.enable = true;
     enableLsColors = true;
 
-    shellAliases = [
-      "ll='ls -l'"
-      "la='ls -la'"
-      "l='ls -CF'"
-      "g='git'"
-      "v='vim'"
-      "c='clear'"
-      "h='history'"
-      "grep='grep --color=auto'"
-      "m='make'"
-    ];
+    shellAliases = {
+      ll = "ls -l";
+      la = "ls -la";
+      l = "ls -CF";
+      g = "git";
+      v = "vim";
+      c = "clear";
+      h = "history";
+      grep = "grep --color=auto";
+      m = "make";
+    };
 
     ohMyZsh = {
       enable = true;

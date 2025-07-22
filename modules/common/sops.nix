@@ -10,10 +10,10 @@ in
     age.keyFile = ageKeyFilePath;
   };
 
-  sops.secrets."k3s_token" = {
-    owner = config.users.users.${username}.name;
-    mode = "0400";
-  };
+  # sops.secrets."k3s_token" = {
+  #   owner = config.users.users.${username}.name;
+  #   mode = "0400";
+  # };
 
   environment.variables.SOPS_AGE_KEY_FILE = ageKeyFilePath;
 }
