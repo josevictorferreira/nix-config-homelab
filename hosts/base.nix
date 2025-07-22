@@ -2,8 +2,8 @@
 
 {
   imports = [
-    ./../modules/common/nix.nix
     ./../modules/common/sops.nix
+    ./../modules/common/nix.nix
     ./../modules/common/static-ip.nix
     ./../modules/common/locale.nix
     ./../modules/common/ssh.nix
@@ -14,6 +14,8 @@
   ];
 
   environment.systemPackages = with pkgs; [
+    sops
+    age
     git
     vim
     wget

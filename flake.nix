@@ -7,7 +7,7 @@
   };
   outputs = { self, nixpkgs, sops-nix, ... }@inputs:
     let
-      flakeRoot = self;
+      flakeRoot = ./.;
       username = "josevictor";
       hosts = {
         rpi4 = "aarch64-linux";
