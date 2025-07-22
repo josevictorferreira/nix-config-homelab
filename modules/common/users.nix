@@ -5,7 +5,7 @@
     home = "/home/${username}";
     extraGroups = [ "wheel" ];
     shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = import ../keys/${username}.nix;
+    openssh.authorizedKeys.keys = (import ./../../shared/keys.nix).${username};
   };
 
   security.sudo = {
