@@ -2,8 +2,10 @@
 
 .DEFAULT_GOAL := help
 
+VM_NAME:=VM_NAME=$(cat /proc/cmdline | awk -F'nixos-system-' '{print $2}' | awk -F'-[0-9]' '{print $1}')
+
 rebuild: ## Rebuild NixOS configuration.
-	sudo nixos-rebuild switch --flake .
+	sudo nixos-rebuild switch --flake .#$(VM_NAME)
 
 clean: ## Clean up the Nix store.
 	nix-collect-garbage -d
