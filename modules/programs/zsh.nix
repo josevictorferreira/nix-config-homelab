@@ -7,16 +7,15 @@
     syntaxHighlighting.enable = true;
     enableLsColors = true;
 
-    shellAliases = {
-      ll = "ls -l";
-      la = "ls -la";
-      l = "ls -l";
-      gs = "git status";
-      gcmsg = "git commit -m ";
-      gp = "git push";
-      gl = "git pull";
-      gpr = "git pull --rebase";
+    ohMyZsh = {
+      enable = true;
+      plugins = [
+        "git"
+        "z"
+      ];
+      theme = "robbyrussell";
     };
+
     histSize = 10000;
   };
 }
