@@ -2,10 +2,10 @@
 
 {
   imports = [
-    ./hardware.nix
-    ./../base.nix
-    ./../../modules/roles/nfs-server.nix
-    ./../../modules/services/wake-on-lan-observer.nix
+    ./base.nix
+    ./../modules/hardware/raspberry-pi4.nix
+    ./../modules/roles/nfs-server.nix
+    ./../modules/services/wake-on-lan-observer.nix
   ];
 
   boot.loader.grub.enable = false;
