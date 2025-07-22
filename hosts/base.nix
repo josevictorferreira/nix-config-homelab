@@ -9,9 +9,8 @@
     ./../modules/common/users.nix
     ./../modules/programs/vim.nix
     ./../modules/programs/git.nix
+    ./../modules/programs/zsh.nix
   ];
-
-  programs.zsh.enable = true;
 
   environment.systemPackages = with pkgs; [
     git

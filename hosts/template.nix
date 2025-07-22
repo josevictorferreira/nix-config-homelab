@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -8,10 +8,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "k8s-node-alpha-210";
+  networking.hostName = "k8s-nixos-template";
   networking.interfaces.ens18 = {
     ipv4.addresses = [{
-      address = "10.10.10.210";
+      address = "10.10.10.250";
       prefixLength = 24;
     }];
     useDHCP = false;
@@ -36,6 +36,11 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPAXdWHFx9UwUOXlapiVD0mzM0KL9VsMlblMAc46D9PV josevictor@josevictor-nixos"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOVNsxVT6rzeyqZVlJVdQgKEzK2z0fOFNRZMAvQvBxbX josevictorferreira@macos-macbook"
     ];
+  };
+
+  security.sudo = {
+    enable = true;
+    wheelNeedsPassword = false;
   };
 
   environment.systemPackages = with pkgs; [
@@ -67,7 +72,25 @@
     enableSSHSupport = true;
   };
 
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
+    enableLsColors = true;
+
+    shellAliases = {
+      ll = "ls -l";
+      la = "ls -la";
+      l = "ls -l";
+      gs = "git status";
+      gcmsg = "git commit -m ";
+      gp = "git push";
+      gl = "git pull";
+      gpr = "git pull --rebase";
+    };
+    histSize = 10000;
+  };
 
   system.stateVersion = "25.05";
 
