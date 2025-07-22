@@ -29,7 +29,7 @@
           };
           modules = [
             sops-nix.nixosModules.sops
-            ./hosts/${hostName}/configuration.nix
+            ./hosts/${hostName}.nix
           ];
         };
     in
