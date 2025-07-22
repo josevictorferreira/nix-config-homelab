@@ -11,6 +11,7 @@
       username = "josevictor";
       hosts = {
         rpi4 = "aarch64-linux";
+        k8s-nixos-template = "x86_64-linux";
         k8s-node-210-alpha = "x86_64-linux";
         k8s-node-211-beta = "x86_64-linux";
         k8s-node-212-gamma = "x86_64-linux";
