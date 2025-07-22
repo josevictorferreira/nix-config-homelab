@@ -2,7 +2,8 @@
 
 let
   clusterConfig = import ./../../shared/cluster-config.nix;
-  serverAddress = (import ./../../hosts/${clusterConfig.masters[0]}.nix).networking.staticIP.address;
+  masterInitHostname = builtins.head clusterConfig.masters;
+  serverAddress = (import ./../../hosts/${masterInitHostname}.nix { }).networking.staticIP.address;
 in
 {
   networking.firewall.allowedTCPPorts = clusterConfig.portsTcpToExpose;

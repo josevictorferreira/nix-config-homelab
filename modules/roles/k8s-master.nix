@@ -2,8 +2,8 @@
 
 let
   clusterConfig = import ./../../shared/cluster-config.nix;
-  masterInitHostname = clusterConfig.masters [ 0 ];
-  serverAddress = (import ./../../hosts/${clusterConfig.masters[0]}.nix).networking.staticIP.address;
+  masterInitHostname = builtins.head clusterConfig.masters;
+  serverAddress = (import ./../../hosts/${masterInitHostname}.nix { }).networking.staticIP.address;
   selfHostname = config.networking.hostName;
   isInit = selfHostname == masterInitHostname;
   initFlags = [
