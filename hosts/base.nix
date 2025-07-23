@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, hostName, ... }:
 
 {
   imports = [
@@ -23,4 +23,8 @@
     gnumake
     htop
   ];
+
+  environment.sessionVariables = {
+    HOSTNAME = hostName;
+  };
 }
