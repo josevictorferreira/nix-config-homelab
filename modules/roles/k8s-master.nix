@@ -21,9 +21,9 @@ in
   services.k3s = {
     enable = true;
     role = "server";
-    tokenFile = clusterConfig.tokenFile;
     extraFlags = toString initFlags;
   } // lib.optionalAttrs (!isInit) {
     serverAddr = "https://${serverAddress}:6443";
+    tokenFile = clusterConfig.tokenFile;
   };
 }
