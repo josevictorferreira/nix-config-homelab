@@ -19,7 +19,7 @@ in
     role = "server";
     tokenFile = clusterConfig.tokenFile;
     extraFlags = toString initFlags;
-  } // lib.optionalAttrs isInit {
+  } // lib.optionalAttrs (!isInit) {
     serverAddr = "https://${serverAddress}:6443";
   };
 }

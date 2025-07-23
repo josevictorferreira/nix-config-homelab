@@ -1,14 +1,12 @@
-.PHONY: vm rebuild clean secrets help
+.PHONY: hostname rebuild clean secrets help 
 
 .DEFAULT_GOAL := help
 
-VM_NAME := $(shell cat /proc/cmdline | sed 's/.*nixos-system-\([^-]*-[^-]*-[^-]*\)-.*/\1/')
-
-vm_name: ## Print the name of the virtual machine.
-	@echo $(VM_NAME)
+hostname: ## Print the actual hostanme of the current machine.
+	@echo $$HOSTNAME
 
 rebuild: ## Rebuild NixOS configuration.
-	sudo nixos-rebuild switch --flake .#$(VM_NAME)
+	sudo nixos-rebuild switch --flake .#$$HOSTNAME
 
 clean: ## Clean up the Nix store.
 	nix-collect-garbage -d
