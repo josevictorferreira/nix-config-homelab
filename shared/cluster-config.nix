@@ -53,7 +53,7 @@
     "k8s-node-212-gamma"
   ];
 
-  tokenFile = "/var/run/secrets/k3s_token";
+  tokenFile = "/run/secrets/k3s_token";
 
   portsUdpToExpose = [
     8472
