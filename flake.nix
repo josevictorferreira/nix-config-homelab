@@ -14,7 +14,6 @@
 
       mkHost = hostName:
         nixpkgs.lib.nixosSystem {
-          hostConfig = hosts.${hostName};
           system = hosts.${hostName}.system;
           specialArgs = {
             inherit self inputs hostName username flakeRoot clusterConfig;
@@ -28,6 +27,6 @@
         };
     in
     {
-      nixosConfigurations = nixpkgs.lib.mapAttrs (hostName: _system: mkHost hostName);
+      nixosConfigurations = nixpkgs.lib.mapAttrs (hostName: _system: mkHost hostName) hosts;
     };
 }
