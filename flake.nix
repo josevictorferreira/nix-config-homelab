@@ -9,8 +9,8 @@
     let
       flakeRoot = ./.;
       username = "josevictor";
-      clusterConfig = import ./../shared/cluster-config.nix;
-      hosts = clusterConfig.nodes;
+      clusterConfig = import ./shared/cluster-config.nix;
+      hosts = clusterConfig.hosts;
 
       mkHost = hostName:
         nixpkgs.lib.nixosSystem {
