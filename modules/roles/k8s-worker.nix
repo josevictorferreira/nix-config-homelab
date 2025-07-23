@@ -5,7 +5,7 @@ let
   serverAddress = clusterConfig.hosts.${masterHostname}.ipAddress;
   initFlags = [
     "--node-name=${hostName}"
-    "--node-label=node-role.kubernetes.io/worker=true"
+    "--node-label=node-role.kubernetes.io/worker="
     "--node-label=node-group=worker"
   ];
 in
