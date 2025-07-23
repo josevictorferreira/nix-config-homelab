@@ -7,6 +7,7 @@ let
   clusterInitFlags = [
     "--cluster-init"
     "--disable=traefik,servicelb"
+    "--node-taint=node-role.kubernetes.io/control-plane=true:NoSchedule"
   ];
   initFlags = [ ] ++ (if isInit then clusterInitFlags else [ ]);
 in
