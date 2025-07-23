@@ -7,9 +7,12 @@ let
   clusterInitFlags = [
     "--cluster-init"
     "--disable=traefik,servicelb"
-    "--node-taint=node-role.kubernetes.io/control-plane=true:NoSchedule"
   ];
-  initFlags = [ ] ++ (if isInit then clusterInitFlags else [ ]);
+  initFlags = [
+    "--node-taint=node-role.kubernetes.io/control-plane=true:NoSchedule"
+    "--node-name=${hostName}"
+    "--node-label=node-group=master"
+  ] ++ (if isInit then clusterInitFlags else [ ]);
 in
 {
   networking.firewall.allowedTCPPorts = clusterConfig.portsTcpToExpose;
