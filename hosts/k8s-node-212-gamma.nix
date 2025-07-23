@@ -1,16 +1,15 @@
-{ ... }:
+{ hostName, hostConfig, ... }:
 
 {
   imports = [
-    ./../modules/hardware/intel-nuc-vm.nix
     ./base.nix
     ./../modules/roles/k8s-master.nix
   ];
 
-  networking.hostName = "k8s-node-211-gamma";
+  networking.hostName = hostName;
   networking.staticIP = {
     enable = true;
     interface = "ens18";
-    address = "10.10.10.212";
+    address = hostConfig.ipAddress;
   };
 }

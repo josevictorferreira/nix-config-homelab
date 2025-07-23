@@ -1,15 +1,14 @@
-{ config, ... }:
+{ lib, hostName, clusterConfig, ... }:
 
 let
-  clusterConfig = import ./../../shared/cluster-config.nix;
-  masterInitHostname = builtins.head clusterConfig.masters;
-  serverAddress = (import ./../../hosts/${masterInitHostname}.nix { }).networking.staticIP.address;
-  selfHostname = config.networking.hostName;
-  isInit = selfHostname == masterInitHostname;
-  initFlags = [
+  masterHostname = builtins.head clusterConfig.masters;
+  serverAddress = clusterConfig.hosts.${masterHostname}.ipAddress;
+  isInit = hostName == masterHostname;
+  clusterInitFlags = [
     "--cluster-init"
     "--disable=traefik,servicelb"
   ];
+  initFlags = [ ] ++ (if isInit then clusterInitFlags else [ ]);
 in
 {
   networking.firewall.allowedTCPPorts = clusterConfig.portsTcpToExpose;
@@ -19,8 +18,8 @@ in
     enable = true;
     role = "server";
     tokenFile = clusterConfig.tokenFile;
+    extraFlags = toString initFlags;
+  } // lib.optionalAttrs isInit {
     serverAddr = "https://${serverAddress}:6443";
-    extraFlags = toString [
-    ] ++ (if isInit then initFlags else [ ]);
   };
 }

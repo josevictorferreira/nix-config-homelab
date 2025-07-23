@@ -9,32 +9,25 @@
     let
       flakeRoot = ./.;
       username = "josevictor";
-      hosts = {
-        rpi4 = "aarch64-linux";
-        k8s-nixos-template = "x86_64-linux";
-        k8s-node-210-alpha = "x86_64-linux";
-        k8s-node-211-beta = "x86_64-linux";
-        k8s-node-212-gamma = "x86_64-linux";
-        k8s-node-213-delta = "x86_64-linux";
-        k8s-node-214-epsilon = "x86_64-linux";
-        k8s-node-215-zeta = "x86_64-linux";
-        k8s-node-216-eta = "x86_64-linux";
-      };
+      clusterConfig = import ./../shared/cluster-config.nix;
+      hosts = clusterConfig.nodes;
 
       mkHost = hostName:
         nixpkgs.lib.nixosSystem {
-          system = hosts.${hostName};
+          hostConfig = hosts.${hostName};
+          system = hosts.${hostName}.system;
           specialArgs = {
-            inherit self inputs hostName username flakeRoot;
+            inherit self inputs hostName username flakeRoot clusterConfig;
+            hostConfig = hosts.${hostName};
           };
           modules = [
             sops-nix.nixosModules.sops
+            ./modules/hardware/${hosts.${hostName}.machine}.nix
             ./hosts/${hostName}.nix
           ];
         };
     in
     {
-      nixosConfigurations = nixpkgs.lib.mapAttrs (hostName: _system: mkHost hostName) hosts;
+      nixosConfigurations = nixpkgs.lib.mapAttrs (hostName: _system: mkHost hostName);
     };
 }
-

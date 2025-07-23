@@ -1,17 +1,16 @@
-{ ... }:
+{ hostName, hostConfig, ... }:
 
 {
   imports = [
     ./base.nix
-    ./../modules/hardware/raspberry-pi4.nix
     ./../modules/roles/nfs-server.nix
     ./../modules/services/wake-on-lan-observer.nix
   ];
 
-  networking.hostName = "rpi4";
+  networking.hostName = hostName;
   networking.staticIP = {
     enable = true;
     interface = "end0";
-    address = "10.10.10.209";
+    address = hostConfig.ipAddress;
   };
 }
