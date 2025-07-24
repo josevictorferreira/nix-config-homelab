@@ -2,7 +2,7 @@
   clusterName = "homelab";
 
   hosts = {
-    raspberry-pi4 = {
+    rpi4 = {
       ipAddress = "10.10.10.209";
       system = "aarch64-linux";
       machine = "raspberry-pi4";
